@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://makos.local/schemas/frontmatter.schema.json",
+  "title": "MAKOS Frontmatter",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "created_at",
+    "updated_at",
+    "authors",
+    "owners",
+    "tags",
+    "visibility",
+    "write_permissions"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$" },
+    "type": {
+      "type": "string",
+      "enum": [
+        "procedure",
+        "skill",
+        "knowledge_note",
+        "memory_entry",
+        "decision_log",
+        "scratchpad",
+        "index",
+        "review_item",
+        "history_entry"
+      ]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "approved",
+        "deprecated",
+        "archived",
+        "needs_review",
+        "in_progress",
+        "proposed",
+        "done"
+      ]
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "authors": { "type": "array", "items": { "type": "string" } },
+    "owners": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "domain": { "type": "string" },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "source_type": {
+      "type": "string",
+      "enum": ["human", "agent", "derived", "external", "generated", "procedure-run", "system"]
+    },
+    "source_refs": { "type": "array", "items": { "type": "string" } },
+    "related": { "type": "array", "items": { "type": "string" } },
+    "supersedes": { "type": "array", "items": { "type": "string" } },
+    "procedure_for": { "type": "string" },
+    "skill_for": { "type": "string" },
+    "review_due": { "type": "string", "format": "date-time" },
+    "write_permissions": { "type": "array", "items": { "type": "string" } },
+    "visibility": { "type": "string", "enum": ["shared", "restricted", "private"] },
+    "checksum": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "procedure" } } },
+      "then": { "required": ["procedure_for", "related"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "skill" } } },
+      "then": { "required": ["skill_for"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "knowledge_note" } } },
+      "then": { "required": ["domain", "confidence", "source_type"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "memory_entry" } } },
+      "then": { "required": ["source_type"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "decision_log" } } },
+      "then": { "required": ["source_type", "source_refs"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "review_item" } } },
+      "then": { "required": ["review_due"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "history_entry" } } },
+      "then": { "required": ["source_type", "source_refs"] }
+    }
+  ],
+  "additionalProperties": true
+}

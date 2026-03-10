@@ -1,0 +1,3 @@
+display_name: MAKOS Context OS
+short_description: Shared vault, memory, procedures, and audit for agent work across projects.
+default_prompt: Use MAKOS as the shared context layer. Search before creating, reuse procedures, write through MAKOS, log relevant actions, and keep the vault understandable for humans in Obsidian.

@@ -1,0 +1,35 @@
+common_required:
+  - id
+  - type
+  - title
+  - status
+  - created_at
+  - updated_at
+  - authors
+  - owners
+  - tags
+  - visibility
+  - write_permissions
+
+required_by_type:
+  procedure:
+    - procedure_for
+    - related
+  skill:
+    - skill_for
+  knowledge_note:
+    - domain
+    - confidence
+    - source_type
+  memory_entry:
+    - source_type
+  decision_log:
+    - source_type
+    - source_refs
+  scratchpad: []
+  index: []
+  review_item:
+    - review_due
+  history_entry:
+    - source_type
+    - source_refs

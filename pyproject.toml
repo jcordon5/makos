@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "makos-bridge"
+version = "0.1.0"
+description = "Model-agnostic CLI bridge for a shared Obsidian knowledge vault"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "MAKOS POC" }]
+dependencies = [
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+makos = "makos_bridge.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "bridge"}
+
+[tool.setuptools.packages.find]
+where = ["bridge"]
+
+[tool.pytest.ini_options]
+pythonpath = ["bridge"]
+addopts = "-q"
