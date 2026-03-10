@@ -2,7 +2,7 @@
 
 MAKOS ahora se distribuye tambien como una skill Claude-compatible:
 
-- source bundle: [agent-skills/makos-context-os/SKILL.md](/Users/jose/Desktop/MISC/Proyectos/makos/agent-skills/makos-context-os/SKILL.md)
+- source bundle: [agent-skills/makos-context-os/SKILL.md](../agent-skills/makos-context-os/SKILL.md)
 - runtime target: `~/.claude/skills/makos-context-os`
 
 ## Qué consigue

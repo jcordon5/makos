@@ -22,10 +22,10 @@ Permitir que cualquier agente con acceso a filesystem + CLI pueda:
 Ver detalle en [docs/architecture.md](docs/architecture.md).
 
 Prompt canónico para agentes (incluido en MAKOS):
-- [vault-template/00-system/agent-system-prompt.md](/Users/jose/Desktop/MISC/Proyectos/makos/vault-template/00-system/agent-system-prompt.md)
+- [vault-template/00-system/agent-system-prompt.md](vault-template/00-system/agent-system-prompt.md)
 
 Skill Claude-compatible incluida en MAKOS:
-- [docs/claude-skill.md](/Users/jose/Desktop/MISC/Proyectos/makos/docs/claude-skill.md)
+- [docs/claude-skill.md](docs/claude-skill.md)
 
 ## Estructura del repo
 
@@ -48,7 +48,7 @@ cd /Users/jose/Desktop/MISC/Proyectos/makos
 
 En macOS también puedes hacer doble clic en:
 
-- [Install MAKOS.command](/Users/jose/Desktop/MISC/Proyectos/makos/Install%20MAKOS.command)
+- [Install MAKOS.command](Install%20MAKOS.command)
 
 Esto auto-descubre o auto-crea la bóveda global en `~/.makos/vault` y deja configuración en `~/.makos/config.json`.
 Además crea launcher global en `~/.makos/bin/makos`.
