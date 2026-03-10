@@ -1,122 +1,107 @@
-# MAKOS POC - Multi Agent Knowledge OS (Model-Agnostic)
+# MAKOS
 
-POC local y portable de un sistema de conocimiento compartido para humanos y agentes, basado en un vault de Obsidian y operable vía shell.
+Shared Knowledge OS for humans and AI agents.  
+Model-agnostic. Local-first. Obsidian-native.
 
-## Objetivo
+MAKOS convierte un vault de Obsidian en una capa compartida de:
 
-Permitir que cualquier agente con acceso a filesystem + CLI pueda:
+- procedimientos reutilizables
+- conocimiento estable
+- memoria compartida
+- historial y auditoría
+- skills portables para agentes
 
-- descubrir estructura del conocimiento
-- recuperar procedimientos, skills y memoria
-- buscar, crear y actualizar notas con gobernanza
-- registrar auditoría mínima de acciones
-- reutilizar procedimientos existentes antes de improvisar
+Sin cloud. Sin lock-in de proveedor. Sin vector DB obligatoria.
 
-## Arquitectura (4 capas)
+## Why
 
-1. **Vault**: fuente de verdad en markdown + YAML frontmatter.
-2. **Canonical Conventions**: estructura, tipos, metadatos, políticas.
-3. **Bridge (`makos`)**: CLI neutral, validación y trazabilidad.
-4. **Runtime Universal**: cualquier humano/agente con shell opera sin SDK propietario.
+La mayoría de agentes trabajan con contexto efímero y memoria fragmentada.  
+MAKOS les da una base común, legible por humanos y operable por cualquier agente con acceso a filesystem + shell.
 
-Ver detalle en [docs/architecture.md](docs/architecture.md).
+## Quick Start
 
-Prompt canónico para agentes (incluido en MAKOS):
-- [vault-template/00-system/agent-system-prompt.md](vault-template/00-system/agent-system-prompt.md)
+Si solo quieres empezar a usar MAKOS y crear tu bóveda:
 
-Skill Claude-compatible incluida en MAKOS:
-- [docs/claude-skill.md](docs/claude-skill.md)
+1. Descarga o clona este repo.
+2. Arranca MAKOS.
+3. Abre la bóveda en Obsidian.
 
-## Estructura del repo
+macOS, sin terminal:
 
-- `agent-skills/`: skills bundles compatibles con Claude y otros runtimes que adopten la convención `SKILL.md`.
-- `vault-template/`: vault base de Obsidian listo para usar.
-- `bridge/`: CLI neutral en Python (`makos`).
-- `schemas/`: esquema de frontmatter y campos requeridos por tipo.
-- `scripts/`: bootstrap y demo local.
-- `docs/`: arquitectura, uso, ejemplos y roadmap.
-- `tests/`: tests de validación, seguridad de escritura y procedimientos.
+- doble clic en [Install MAKOS.command](Install%20MAKOS.command)
 
-## Modo Zero-Config (recomendado)
-
-Sin instalación de paquetes ni paths manuales:
-
-```bash
-cd makos
-./makos agent-ready --json
-```
-
-En macOS también puedes hacer doble clic en:
-
-- [Install MAKOS.command](Install%20MAKOS.command)
-
-Esto auto-descubre o auto-crea la bóveda global en `~/.makos/vault` y deja configuración en `~/.makos/config.json`.
-Además crea launcher global en `~/.makos/bin/makos`.
-Tambien registra y habilita la skill central `makos-context-os` en `~/.claude/skills/`.
-
-## Instalación local (opcional)
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .[dev]
-```
-
-## Inicio rápido
+Cualquier shell:
 
 ```bash
 ./makos agent-ready
-~/.makos/bin/makos doctor
+```
+
+La primera vez, MAKOS crea o reutiliza tu bóveda compartida en:
+
+```text
+~/.makos/vault
+```
+
+Después, abre esa carpeta como vault en Obsidian.
+
+Si ya tienes una bóveda MAKOS existente:
+
+```bash
+./makos agent-ready --vault /ruta/a/tu/vault
+```
+
+## Use With Any Agent
+
+Para que un agente use MAKOS por defecto:
+
+- Claude-compatible: instala o habilita la skill incluida `makos-context-os`
+- otros agentes: usa el prompt canónico de [vault-template/00-system/agent-system-prompt.md](vault-template/00-system/agent-system-prompt.md)
+
+Referencia de la skill:
+
+- [docs/claude-skill.md](docs/claude-skill.md)
+
+## What You Get
+
+- un vault base de Obsidian listo para usar
+- una CLI neutral: `makos`
+- convenciones de escritura y lectura
+- validación de frontmatter
+- trazabilidad de cambios y decisiones
+- índices y vistas para humanos
+
+## Core Commands
+
+```bash
+./makos agent-ready
 ./makos doctor
 ./makos list-procedures
-./makos run-procedure "redactar-informe-recurrente" --input periodo=2026-Q1 --input audiencia=Direccion
+./makos run-procedure "redactar-informe-recurrente"
 ./makos review-queue --write-page
 ./makos reindex
 ```
 
-## Comandos del bridge
+## Repository Layout
 
-- `makos init`
-- `makos agent-ready`
-- `makos list-skills`
-- `makos install-skill`
-- `makos enable-skill`
-- `makos disable-skill`
-- `makos doctor`
-- `makos search`
-- `makos read`
-- `makos create`
-- `makos update`
-- `makos append-history`
-- `makos list-procedures`
-- `makos run-procedure`
-- `makos suggest-related`
-- `makos validate-note`
-- `makos review-queue`
-- `makos reindex`
+- `agent-skills/`: skills bundles compatibles con la convención `SKILL.md`
+- `vault-template/`: plantilla base del vault
+- `bridge/`: implementación del bridge y CLI `makos`
+- `schemas/`: esquema de metadatos y campos requeridos
+- `scripts/`: utilidades de bootstrap y demos
+- `docs/`: arquitectura, instalación, uso, ejemplos y roadmap
+- `tests/`: tests de validación y comportamiento
 
-## Políticas implementadas
+## Docs
 
-- búsqueda previa y detección de duplicados obvios antes de crear
-- bloqueo de escritura de baja confianza en `04-knowledge`
-- snapshot previo a updates (historial en `06-history/changes`)
-- logging de escrituras relevantes en `06-history/actions|changes|decisions`
-- validación estricta de frontmatter
-- registry compartida de skills con sincronización a `~/.claude/skills`
+- [docs/architecture.md](docs/architecture.md)
+- [docs/install.md](docs/install.md)
+- [docs/usage.md](docs/usage.md)
+- [docs/claude-skill.md](docs/claude-skill.md)
+- [docs/examples](docs/examples)
+- [docs/limitations.md](docs/limitations.md)
+- [docs/roadmap-v2.md](docs/roadmap-v2.md)
 
-## Limitaciones POC
+## Status
 
-- búsqueda textual sin embeddings/vector DB
-- deduplicación basada en similitud de títulos + texto básico
-- ejecución de procedures genera workspace (no orquesta herramientas externas por sí sola)
-
-Detalles: [docs/limitations.md](docs/limitations.md)
-
-## Roadmap v2
-
-- motor opcional de embeddings desacoplado
-- scoring semántico avanzado de relacionados
-- métricas de uso y calidad por procedure
-- pipeline de promoción automática inbox -> knowledge con gates configurables
-
-Ver [docs/roadmap-v2.md](docs/roadmap-v2.md).
+POC funcional y portable para macOS/Linux.  
+Diseñado para evolucionar hacia una capa estándar de contexto compartido entre agentes y organizaciones.
