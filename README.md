@@ -42,7 +42,7 @@ Skill Claude-compatible incluida en MAKOS:
 Sin instalación de paquetes ni paths manuales:
 
 ```bash
-cd /Users/jose/Desktop/MISC/Proyectos/makos
+cd makos
 ./makos agent-ready --json
 ```
 

@@ -9,7 +9,7 @@
 ## Setup zero-config (sin instalación de paquetes)
 
 ```bash
-cd /Users/jose/Desktop/MISC/Proyectos/makos
+cd makos
 ./makos agent-ready --json
 ```
 
